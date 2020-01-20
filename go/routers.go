@@ -83,9 +83,9 @@ var routes = Routes{
 	},
 
 	Route{
-		"IngredientSearchPhpGet",
+		"FoodIngredientSearchPhpGet",
 		strings.ToUpper("Get"),
-		"/api/v2/ingredient/search.php",
-		IngredientSearchPhpGet,
+		"/api/v2/food/ingredient/search.php",
+		FoodIngredientSearchPhpGet,
 	},
 }
