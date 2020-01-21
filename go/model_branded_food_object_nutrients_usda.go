@@ -23,12 +23,12 @@ type BrandedFoodObjectNutrientsUsda struct {
 	Max *BigDecimal `json:"max,omitempty"`
 	// Median nutrient value
 	Median *BigDecimal `json:"median,omitempty"`
+	// Nutrient rank
+	Rank int32 `json:"rank,omitempty"`
 	// Number of observations on which the value is based
 	DataPoints int32 `json:"data_points,omitempty"`
 	// Comments on any unusual aspect of the food nutrient. Examples might include why a nutrient value is different than typically expected.
 	Footnote string `json:"footnote,omitempty"`
 	// Description of the nutrient source
-	Source string `json:"source,omitempty"`
-	// Description of how the food nutrient value was obtained
 	Description string `json:"description,omitempty"`
 }
