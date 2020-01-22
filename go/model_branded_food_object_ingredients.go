@@ -10,7 +10,7 @@ package swagger
 
 // An object containing this item's ingredients in order of highest value to least
 type BrandedFoodObjectIngredients struct {
-	// This item's ingredients as seen on ChompThis.com
+	// Ingredients for this item from Chomp's internal database
 	Chomp string `json:"chomp,omitempty"`
 	// This branded food item's ingredients according to the USDA
 	Usda string `json:"usda,omitempty"`

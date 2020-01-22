@@ -8,7 +8,7 @@
  */
 package swagger
 
-// Serving information from as seen on ChompThis.com
+// Serving information from Chomp's internal database
 type BrandedFoodObjectServingChomp struct {
 	// Serving size with measurement unit (e.g. if measure is 3 tsp, the unit is tsp)
 	Size string `json:"size,omitempty"`
