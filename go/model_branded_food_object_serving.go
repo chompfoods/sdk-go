@@ -10,10 +10,8 @@ package swagger
 
 // An object containing serving information for this item
 type BrandedFoodObjectServing struct {
-	// Serving size
-	Size int32 `json:"size,omitempty"`
-	// Serving measurement unit (e.g. if measure is 3 tsp, the unit is tsp)
-	MeasurementUnit string `json:"measurement_unit,omitempty"`
+	// Serving size with measurement unit (e.g. if measure is 3 tsp, the unit is tsp)
+	Size string `json:"size,omitempty"`
 	// Serving size description
 	SizeFulltext string `json:"size_fulltext,omitempty"`
 	// Total servings
