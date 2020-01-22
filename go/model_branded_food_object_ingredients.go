@@ -8,10 +8,10 @@
  */
 package swagger
 
-// An object containing basic packaging information about this item
-type BrandedFoodObjectPackage struct {
-	// Package quantity
-	Quantity int32 `json:"quantity,omitempty"`
-	// Package size
-	Size string `json:"size,omitempty"`
+// An object containing this item's ingredients in order of highest value to least
+type BrandedFoodObjectIngredients struct {
+	// This item's ingredients as seen on ChompThis.com
+	Chomp string `json:"chomp,omitempty"`
+	// This branded food item's ingredients according to the USDA
+	Usda string `json:"usda,omitempty"`
 }

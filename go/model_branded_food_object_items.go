@@ -16,8 +16,8 @@ type BrandedFoodObjectItems struct {
 	Name string `json:"name,omitempty"`
 	// The brand name that owns this item
 	Brand string `json:"brand,omitempty"`
-	// Ingredients in order of highest value to least
-	Ingredients string `json:"ingredients,omitempty"`
+
+	Ingredients *BrandedFoodObjectIngredients `json:"ingredients,omitempty"`
 
 	Package_ *BrandedFoodObjectPackage `json:"package,omitempty"`
 
