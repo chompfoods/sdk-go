@@ -60,7 +60,7 @@ type BrandedFoodObjectItems struct {
 	Traces []string `json:"traces,omitempty"`
 	// An array of vitamins that are found in this item
 	Vitamins []string `json:"vitamins,omitempty"`
-	// Common names associated with this item. These generally clarify what the item is (e.g. when the brand name is \"BRAND's Spicy Enchilada\" the common name may be \"Chicken enchilada\")
+	// Other names commonly associated with this item. These generally clarify what the item is (e.g. when the brand name is \"BRAND's Spicy Enchilada\" the common name may be \"Chicken enchilada\")
 	CommonName string `json:"common_name,omitempty"`
 	// A description of this item
 	Description string `json:"description,omitempty"`
