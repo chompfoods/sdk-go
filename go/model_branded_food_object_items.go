@@ -60,6 +60,4 @@ type BrandedFoodObjectItems struct {
 	Description string `json:"description,omitempty"`
 	// An array of keywords that can be used to describe this item
 	Keywords []string `json:"keywords,omitempty"`
-	// Comments on any unusual aspects of this item. Examples might include unusual aspects of the food overall.
-	Footnote string `json:"footnote,omitempty"`
 }
