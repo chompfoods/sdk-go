@@ -16,16 +16,16 @@ type BrandedFoodObjectItems struct {
 	Name string `json:"name,omitempty"`
 	// The brand name that owns this item
 	Brand string `json:"brand,omitempty"`
-
-	Ingredients *BrandedFoodObjectIngredients `json:"ingredients,omitempty"`
+	// This food item's ingredients from greatest quantity to least
+	Ingredients string `json:"ingredients,omitempty"`
 
 	Package_ *BrandedFoodObjectPackage `json:"package,omitempty"`
 
 	Serving *BrandedFoodObjectServing `json:"serving,omitempty"`
 
 	Categories []string `json:"categories,omitempty"`
-
-	Nutrients *BrandedFoodObjectNutrients `json:"nutrients,omitempty"`
+	// An array containing nutrient informatio objects for this food item
+	Nutrients []BrandedFoodObjectNutrients `json:"nutrients,omitempty"`
 
 	DietLabels *BrandedFoodObjectDietLabels `json:"diet_labels,omitempty"`
 	// An array of ingredient objects that were flagged while grading this item for compatibility with each diet

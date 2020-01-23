@@ -14,8 +14,8 @@ type IngredientObjectItems struct {
 	Name string `json:"name,omitempty"`
 
 	Categories []string `json:"categories,omitempty"`
-
-	Nutrients *IngredientObjectNutrients `json:"nutrients,omitempty"`
+	// An array containing nutrient informatio objects for this food item
+	Nutrients []IngredientObjectNutrients `json:"nutrients,omitempty"`
 
 	CalorieConversionFactor *IngredientObjectCalorieConversionFactor `json:"calorie_conversion_factor,omitempty"`
 	// The multiplication factor used to calculate protein from nitrogen

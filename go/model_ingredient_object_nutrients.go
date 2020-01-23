@@ -8,8 +8,26 @@
  */
 package swagger
 
-// An object containing nutrient information from each source
+// An object containing information for a specific nutrient found in this food item
 type IngredientObjectNutrients struct {
-	// An array containing an object for each nutrient data point as found in the USDA database
-	Usda []BrandedFoodObjectNutrientsUsda `json:"usda,omitempty"`
+	// Nutrient name
+	Name string `json:"name,omitempty"`
+	// Amount of the nutrient per 100g of food
+	Per100g *BigDecimal `json:"per_100g,omitempty"`
+	// The unit used for the measure of this nutrient
+	MeasurementUnit string `json:"measurement_unit,omitempty"`
+	// Minimum nutrient value
+	Min *BigDecimal `json:"min,omitempty"`
+	// Maximum nutrient value
+	Max *BigDecimal `json:"max,omitempty"`
+	// Median nutrient value
+	Median *BigDecimal `json:"median,omitempty"`
+	// Nutrient rank
+	Rank int32 `json:"rank,omitempty"`
+	// Number of observations on which the value is based
+	DataPoints int32 `json:"data_points,omitempty"`
+	// Comments on any unusual aspect of the food nutrient. Examples might include why a nutrient value is different than typically expected.
+	Footnote string `json:"footnote,omitempty"`
+	// Description of the nutrient source
+	Description string `json:"description,omitempty"`
 }

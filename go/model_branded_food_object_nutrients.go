@@ -8,10 +8,18 @@
  */
 package swagger
 
-// An object containing nutrient information from multiple sources
+// An object containing information for a specific nutrient found in this food item
 type BrandedFoodObjectNutrients struct {
-	// An array containing an object for each nutrient data point
-	Chomp []BrandedFoodObjectNutrientsChomp `json:"chomp,omitempty"`
-	// An array containing an object for each nutrient data point as found in the USDA database
-	Usda []BrandedFoodObjectNutrientsUsda `json:"usda,omitempty"`
+	// Nutrient name
+	Name string `json:"name,omitempty"`
+	// Amount of the nutrient per 100g of food
+	Per100g *BigDecimal `json:"per_100g,omitempty"`
+	// The unit used for the measure of this nutrient
+	MeasurementUnit string `json:"measurement_unit,omitempty"`
+	// Nutrient rank
+	Rank int32 `json:"rank,omitempty"`
+	// Number of observations on which the value is based
+	DataPoints int32 `json:"data_points,omitempty"`
+	// Description of the nutrient source
+	Description string `json:"description,omitempty"`
 }

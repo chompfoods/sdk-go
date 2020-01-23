@@ -10,8 +10,10 @@ package swagger
 
 // An object containing serving information for this item
 type BrandedFoodObjectServing struct {
-
-	Chomp *BrandedFoodObjectServingChomp `json:"chomp,omitempty"`
-
-	Usda *BrandedFoodObjectServingUsda `json:"usda,omitempty"`
+	// Serving size
+	Size string `json:"size,omitempty"`
+	// Measurement unit for each serving (e.g. if measure is 3 tsp, the unit is tsp)
+	MeasurementUnit string `json:"measurement_unit,omitempty"`
+	// Serving size description
+	SizeFulltext string `json:"size_fulltext,omitempty"`
 }

@@ -62,13 +62,6 @@ var routes = Routes{
 	},
 
 	Route{
-		"FoodBrandedIdPhpGet",
-		strings.ToUpper("Get"),
-		"/api/v2/food/branded/id.php",
-		FoodBrandedIdPhpGet,
-	},
-
-	Route{
 		"FoodBrandedNamePhpGet",
 		strings.ToUpper("Get"),
 		"/api/v2/food/branded/name.php",
