@@ -8,28 +8,16 @@
  */
 package swagger
 
-// An object containing information for this specific item.
-type IngredientObjectItems struct {
-	// Item name as provided by brand owner or as shown on packaging
+// An object containing information on a specific component of this food item
+type IngredientObjectComponents struct {
+	// The kind of component, e.g. bone
 	Name string `json:"name,omitempty"`
-
-	Categories []string `json:"categories,omitempty"`
-
-	Nutrients *IngredientObjectNutrients `json:"nutrients,omitempty"`
-
-	CalorieConversionFactor *BrandedFoodObjectCalorieConversionFactor `json:"calorie_conversion_factor,omitempty"`
-	// The multiplication factor used to calculate protein from nitrogen
-	ProteinConversionFactor *BigDecimal `json:"protein_conversion_factor,omitempty"`
-
-	DietLabels *BrandedFoodObjectDietLabels `json:"diet_labels,omitempty"`
-	// An array of objects containing the constituent parts of a food (e.g. bone is a component of meat)
-	Components []IngredientObjectComponents `json:"components,omitempty"`
-	// An array of objects containing information on discrete amounts of a food found in this item
-	Portions []IngredientObjectPortions `json:"portions,omitempty"`
-	// Common names associated with this item. These generally clarify what the item is (e.g. when the brand name is \"BRAND's Spicy Enchilada\" the common name may be \"Chicken enchilada\")
-	CommonNames string `json:"common_names,omitempty"`
-	// A description of this item
-	Description string `json:"description,omitempty"`
-	// Comments on any unusual aspects of this item. Examples might include unusual aspects of the food overall.
-	Footnote string `json:"footnote,omitempty"`
+	// The weight of the component as a percentage of the total weight of the food
+	PctWeight *BigDecimal `json:"pct_weight,omitempty"`
+	// The weight of the component in grams
+	GramWeight *BigDecimal `json:"gram_weight,omitempty"`
+	// Whether the component is refuse, i.e. not edible
+	IsRefuse bool `json:"is_refuse,omitempty"`
+	// The number of obersvations on which the measure is based
+	DataPoints int32 `json:"data_points,omitempty"`
 }

@@ -36,10 +36,6 @@ type BrandedFoodObjectItems struct {
 	DietFlags []BrandedFoodObjectDietFlags `json:"diet_flags,omitempty"`
 
 	PackagingPhotos *BrandedFoodObjectPackagingPhotos `json:"packaging_photos,omitempty"`
-	// An array of objects containing the constituent parts of a food (e.g. bone is a component of meat)
-	Components []BrandedFoodObjectComponents `json:"components,omitempty"`
-	// An array of objects containing information on discrete amounts of a food found in this item
-	Portions []BrandedFoodObjectPortions `json:"portions,omitempty"`
 	// An array of ingredients in this item that may cause allergic reactions in people
 	Allergens []string `json:"allergens,omitempty"`
 	// An array of brands we have associated with this item. Some items are sold by more than 1 brand.
