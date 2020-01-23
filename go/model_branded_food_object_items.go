@@ -27,10 +27,6 @@ type BrandedFoodObjectItems struct {
 
 	Nutrients *BrandedFoodObjectNutrients `json:"nutrients,omitempty"`
 
-	CalorieConversionFactor *BrandedFoodObjectCalorieConversionFactor `json:"calorie_conversion_factor,omitempty"`
-	// The multiplication factor used to calculate protein from nitrogen
-	ProteinConversionFactor *BigDecimal `json:"protein_conversion_factor,omitempty"`
-
 	DietLabels *BrandedFoodObjectDietLabels `json:"diet_labels,omitempty"`
 	// An array of ingredient objects that were flagged while grading this item for compatibility with each diet
 	DietFlags []BrandedFoodObjectDietFlags `json:"diet_flags,omitempty"`
