@@ -28,4 +28,8 @@ type IngredientObjectItems struct {
 	CommonName string `json:"common_name,omitempty"`
 	// Comments on any unusual aspects of this item. Examples might include unusual aspects of the food overall.
 	Footnote string `json:"footnote,omitempty"`
+	// The original search term that found this food item.
+	SearchTerm string `json:"search_term,omitempty"`
+	// A value that represents how similar the name of this food item is to the original search term.
+	Score string `json:"score,omitempty"`
 }
