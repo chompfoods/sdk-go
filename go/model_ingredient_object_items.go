@@ -26,10 +26,10 @@ type IngredientObjectItems struct {
 	Portions []IngredientObjectPortions `json:"portions,omitempty"`
 	// Common name associated with this item. These generally clarify what the item is (e.g. when the brand name is \"BRAND's Spicy Enchilada\" the common name may be \"Chicken enchilada\")
 	CommonName string `json:"common_name,omitempty"`
-	// Comments on any unusual aspects of this item. Examples might include unusual aspects of the food overall.
+	// Comments on any unusual aspects of this item. Examples might include unusual aspects of the food overall
 	Footnote string `json:"footnote,omitempty"`
-	// The original search term that found this food item.
+	// The original search term that found this food item
 	SearchTerm string `json:"search_term,omitempty"`
-	// A value that represents how similar the name of this food item is to the original search term.
+	// A value that represents how similar the name of this food item is to the original search term. The lower the value the closer this item's name is to the original search term.
 	Score string `json:"score,omitempty"`
 }
