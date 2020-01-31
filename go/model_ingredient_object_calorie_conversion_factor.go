@@ -8,8 +8,12 @@
  */
 package swagger
 
-// Please read the description of each field in this API response object example. By default, the value of each field is **null**. This indicates an unknown state or that no data exists.
-type IngredientObject struct {
-	// An array containing an object for each individual item returned by your API call.
-	Items []IngredientObjectItems `json:"items,omitempty"`
+// An object containing the multiplication factors to be used when calculating energy from macronutrients for a specific food.
+type IngredientObjectCalorieConversionFactor struct {
+	// The multiplication factor for protein
+	ProteinValue *BigDecimal `json:"protein_value,omitempty"`
+	// The multiplication factor for fat
+	FatValue *BigDecimal `json:"fat_value,omitempty"`
+	// The multiplication factor for carbohydrates
+	CarbohydrateValue *BigDecimal `json:"carbohydrate_value,omitempty"`
 }

@@ -8,8 +8,16 @@
  */
 package swagger
 
-// Please read the description of each field in this API response object example. By default, the value of each field is **null**. This indicates an unknown state or that no data exists.
-type IngredientObject struct {
-	// An array containing an object for each individual item returned by your API call.
-	Items []IngredientObjectItems `json:"items,omitempty"`
+// An object containing information on a specific component of this food item
+type IngredientObjectComponents struct {
+	// The kind of component, e.g. bone
+	Name string `json:"name,omitempty"`
+	// The weight of the component as a percentage of the total weight of the food
+	PctWeight *BigDecimal `json:"pct_weight,omitempty"`
+	// The weight of the component in grams
+	GramWeight *BigDecimal `json:"gram_weight,omitempty"`
+	// Whether the component is refuse, i.e. not edible
+	IsRefuse bool `json:"is_refuse,omitempty"`
+	// The number of obersvations on which the measure is based
+	DataPoints int32 `json:"data_points,omitempty"`
 }
