@@ -1,0 +1,2449 @@
+openapi: 3.0.0
+info:
+  title: Chomp Food & Recipe Database API Documentation
+  description: "## Important\nAn **[API key](https://chompthis.com/api/)** is required\
+    \ for access to this API.\n* Get a **Food Data API** key at **[https://chompthis.com/api](https://chompthis.com/api/)**.\n\
+    * Get a **Recipe Data API** key at **[https://chompthis.com/api/recipes](https://chompthis.com/api/recipes/)**.\n\
+    \n### Getting Started\n  * Subscribe to the **[Food Data API](https://chompthis.com/api/#pricing)**\
+    \ or the **[Recipe Data API](https://chompthis.com/api/recipes/#pricing)**.\n\
+    \  * Scroll down and click the \"**Authorize**\" button.\n  * Enter your API key\
+    \ into the \"**value**\" input, click the \"**Authorize**\" button, then click\
+    \ the \"**Close**\" button.\n  * Scroll down to the section titled \"**default**\"\
+    \ and click on the API endpoint you wish to use.\n  * Click the \"**Try it out**\"\
+    \ button.\n  * Enter the information the endpoint requires.\n  * Click the \"\
+    **Execute**\" button.\n\n### Example \n  * Branded food response object: **[View\
+    \ example &raquo;](https://raw.githubusercontent.com/chompfoods/examples/master/branded-food-response-object.json)**\n\
+    \  * Ingredient response object: **[View example &raquo;](https://raw.githubusercontent.com/chompfoods/examples/master/ingredient-response-object.json)**\n\
+    \  * Recipe response object: **[View example &raquo;](https://raw.githubusercontent.com/chompfoods/examples/master/example-recipe-response.json)**\n\
+    \  * Error response object: **[View example &raquo;](https://raw.githubusercontent.com/chompfoods/examples/master/error-response-object.json)**\n\
+    \n### How Do I Find My API Key?\n  * Your API key was sent to the email address\
+    \ you used to create your subscription.\n  * You will also find your API key in\
+    \ the **[Client Center](https://chompthis.com/api/manage.php)**.\n  * Read **[this\
+    \ article](https://desk.zoho.com/portal/chompthis/kb/articles/how-do-i-find-my-api-key)**\
+    \ for more information.\n\n### I'm a Premium subscriber. How do I access the API?\n\
+    \  * All Premium subscribers must pass in a unique user ID for each user on their\
+    \ platform that is accessing data from the Chomp API. A user ID can be any string\
+    \ of letters and numbers that you assign to your user. Simply add \"user_id\"\
+    \ as a URL parameter when calling the API. *You must add a \"user_id\" URL parameter\
+    \ to every call you make to ANY endpoint.*\n    * **Example** \n      > ```ENDPOINT.php?api_key=API_KEY&code=CODE&user_id=USER_ID```\n\
+    \n### Helpful Links\n  * **Help & Support**\n    * [Knowledge Base &raquo;](https://desk.zoho.com/portal/chompthis/kb/chomp)\n\
+    \    * [Support &raquo;](https://chompthis.com/api/ticket-new.php)\n    * [Client\
+    \ Center &raquo;](https://chompthis.com/api/manage.php)\n  * **Pricing**\n   \
+    \ * [Food Data API Subscription Options &raquo;](https://chompthis.com/api/)\n\
+    \    * [Recipe Data API Subscription Options &raquo;](https://chompthis.com/api/recipes/)\n\
+    \    * [Food Data API Cost Calculator &raquo;](https://chompthis.com/api/cost-calculator.php)\n\
+    \    * [Recipe Data API Cost Calculator &raquo;](https://chompthis.com/api/recipes/cost-calculator.php)\n\
+    \  * **Guidelines**\n    * [Terms & License &raquo;](https://chompthis.com/api/terms.php)\n\
+    \    * [Attribution &raquo;](https://chompthis.com/api/docs/attribution.php)\n"
+  version: 1.0.0-oas3
+servers:
+- url: https://chompthis.com/api/v2
+  description: Production server (uses live data)
+paths:
+  /food/branded/barcode.php:
+    get:
+      summary: Get a branded food item using a barcode
+      description: "## Get data for a branded food using the food's UPC/EAN barcode.\n\
+        \n**You must have a Food API key to use this endpoint.** Get a [Food API key](https://chompthis.com/api/).\n\
+        \n**Example** \n> ```https://chompthis.com/api/v2/food/branded/barcode.php?api_key=API_KEY&code=CODE```\n\
+        \n**Tips**\n  * Read our **[Knowledge Base article](https://desk.zoho.com/portal/chompthis/kb/articles/im-having-trouble-getting-matches-for-barcodes-what-can-id-do)**\
+        \ for helpful tips and tricks.\n  * Perform a [check-digit](https://en.wikipedia.org/wiki/Check_digit#UPC)\
+        \ on the barcode you are using.\n  * Use a barcode from our website [ChompThis.com](https://chompthis.com/?r=api).\
+        \ Search for a food and use the barcode shown in the search results.\n  *\
+        \ It is possible that our database contains the food you're looking for, but\
+        \ does not have the same barcode you are using. This can happen if a manufacturer\
+        \ introduces a variation of the same food, or the barcode you got was from\
+        \ a 2 oz bag of chips when our database has the food packaged in a 4 oz bag.\n\
+        \  * [Contact us](https://chompthis.com/contact.php?api=y) if you are having\
+        \ trouble.\n"
+      parameters:
+      - name: code
+        in: query
+        description: |
+          #### UPC/EAN barcode
+
+          **Example**
+          > ```&code=0842234000988```
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        description: |
+          #### **Only required for Premium subscribers.** The unique identifier assigned to each user on your platform. This can be any string of letters or numbers and doesn't have to relate to your own database. [Learn more](https://desk.zoho.com/portal/chompthis/en/kb/articles/monthly-active-users)
+
+          **Example**
+          > ```&user_id=fehef8w4ha```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "**Valid** - Will return an object containing any matching\
+            \ foods. \n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandedFoodObject'
+        "400":
+          description: |
+            **Validation error** - Invalid parameters or request.
+        "401":
+          description: |
+            **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+        "404":
+          description: |
+            **Not found** - No food items were found.
+        "500":
+          description: |
+            **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+      security:
+      - ApiKeyAuth: []
+  /food/branded/name.php:
+    get:
+      summary: Get a branded food item by name
+      description: |
+        ## Search for branded food items by name.
+
+        **You must have a Food API key to use this endpoint.** Get a [Food API key](https://chompthis.com/api/).
+
+        **Example**
+        > ```https://chompthis.com/api/v2/food/branded/name.php?api_key=API_KEY&name=NAME```
+
+        **Tips**
+          * Get started by using our **[food lookup tool](https://chompthis.com/api/lookup.php)**.
+
+        > This API endpoint is only available to Standard and Premium API subscribers. Please consider upgrading your subscription if you are subscribed to the Limited plan. **[Read this](https://desk.zoho.com/portal/chompthis/kb/articles/can-i-upgrade-downgrade-my-subscription)** if you aren't sure how to upgrade your subscription.
+      parameters:
+      - name: name
+        in: query
+        description: |
+          #### Search for branded food items using a general food name keyword. This does not have to exactly match the "official" name for the food.
+
+          **Example**
+          > ```&name=Starburst```
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: |
+          #### Set maximum number of records you want the API to return. The default value is "**10**."
+
+          **Example**
+          > ```&limit=10```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+      - name: page
+        in: query
+        description: |
+          #### This is how you paginate the search result. By default, you will see the first 10 records. You must increment the page number to access the next 10 records, and so on. The default value is "**1**."
+
+          **Example**
+          > ```&page=1```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: user_id
+        in: query
+        description: |
+          #### **Only required for Premium subscribers.** The unique identifier assigned to each user on your platform. This can be any string of letters or numbers and doesn't have to relate to your own database. [Learn more](https://desk.zoho.com/portal/chompthis/en/kb/articles/monthly-active-users)
+
+          **Example**
+          > ```&user_id=fehef8w4ha```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "**Valid** - Will return an object containing any matching\
+            \ foods. \n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandedFoodObject'
+        "400":
+          description: |
+            **Validation error** - Invalid parameters or request.
+        "401":
+          description: |
+            **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+        "404":
+          description: |
+            **Not found** - No food items were found.
+        "500":
+          description: |
+            **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+      security:
+      - ApiKeyAuth: []
+  /food/branded/search.php:
+    get:
+      summary: Get data for branded food items using various search parameters
+      description: "## Search for branded food items using various parameters.\n\n\
+        **You must have a Food API key to use this endpoint.** Get a [Food API key](https://chompthis.com/api/).\n\
+        \n**Example**\n> ```https://chompthis.com/api/v2/food/branded/search.php?api_key=API_KEY&brand=BRAND&country=COUNTRY&page=1```\n\
+        \n**Tips** \n  * Get started by using the **[Query Builder](https://chompthis.com/api/build.php)**.\n\
+        \n> This API endpoint is only available to Standard and Premium API subscribers.\
+        \ Please consider upgrading your subscription if you are subscribed to the\
+        \ Limited plan. **[Read this](https://desk.zoho.com/portal/chompthis/kb/articles/can-i-upgrade-downgrade-my-subscription)**\
+        \ if you aren't sure how to upgrade your subscription.\n"
+      parameters:
+      - name: allergen
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that contain a specific allergen.
+
+          **Example**
+          > ```&allergen=Peanuts```
+
+          **Important Note**: This parameter cannot be used alone. It must be paired with at least 1 additional parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: brand
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that are owned by a specific brand.
+
+          **Example**
+          > ```&brand=Starbucks```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: category
+        in: query
+        description: |
+          #### Filter the search to only include branded foods from a specific category.
+
+          **Example**
+          > ```&category=Plant Based Foods```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: country
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that are sold in a specific country.
+
+          **Example**
+          > ```&country=United States```
+
+          **Important Note**: This parameter cannot be used alone. It must be paired with at least 1 additional parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: diet
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that are considered compatible with a specific diet.
+
+          **Important Note**: This parameter cannot be used alone. It must be paired with at least 1 additional parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - Vegan
+          - Vegetarian
+          - Gluten Free
+      - name: ingredient
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that contain a specific ingredient.
+
+          **Example**
+          > ```&ingredient=Salt```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: keyword
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that are associated with a specific keyword.
+
+          **Example**
+          > ```&keyword=Organic```
+
+          **Important Note**: This parameter cannot be used alone. It must be paired with at least 1 additional parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: mineral
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that contain a specific mineral.
+
+          **Example**
+          > ```&mineral=Potassium```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: nutrient
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that contain a specific nutrient.
+
+          **Example**
+          > ```&nutrient=Caffeine```
+
+          **Important Note**: This parameter cannot be used alone. It must be paired with at least 1 additional parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: palm_oil
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that contain a specific ingredient made using palm oil.
+
+          **Example**
+          > ```&palm_oil=E160a Beta Carotene```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: trace
+        in: query
+        description: |
+          ### Filter the search to only include branded foods that contain a specific trace ingredient.
+
+          **Example**
+          > ```&trace=Tree Nuts```
+
+          **Important Note**: This parameter cannot be used alone. It must be paired with at least 1 additional parameter.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: vitamin
+        in: query
+        description: |
+          #### Filter the search to only include branded foods that contain a specific vitamin.
+
+          **Example**
+          > ```&vitamin=Biotin```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: |
+          #### Set maximum number of records you want the API to return. The default value is "**10**."
+
+          **Example**
+          > ```&limit=10```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+      - name: page
+        in: query
+        description: |
+          #### This is how you paginate the search result. By default, you will see the first 10 records. You must increment the page number to access the next 10 records, and so on. The default value is "**1**."
+
+          **Example**
+          > ```&page=1```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: user_id
+        in: query
+        description: |
+          #### **Only required for Premium subscribers.** The unique identifier assigned to each user on your platform. This can be any string of letters or numbers and doesn't have to relate to your own database. [Learn more](https://desk.zoho.com/portal/chompthis/en/kb/articles/monthly-active-users)
+
+          **Example**
+          > ```&user_id=fehef8w4ha```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "**Valid** - Will return an object containing any matching\
+            \ foods. \n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandedFoodObject'
+        "400":
+          description: |
+            **Validation error** - Invalid parameters or request.
+        "401":
+          description: |
+            **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+        "404":
+          description: |
+            **Not found** - No food items were found.
+        "500":
+          description: |
+            **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+      security:
+      - ApiKeyAuth: []
+  /food/ingredient/search.php:
+    get:
+      summary: Get raw/generic food ingredient item(s)
+      description: |
+        ## Get data for a specific ingredient or a specific set of ingredients.
+
+        **You must have a Food API key to use this endpoint.** Get a [Food API key](https://chompthis.com/api/).
+
+        **Example #1: Single Ingredient**
+        > ```https://chompthis.com/api/v2/food/ingredient/search.php?api_key=API_KEY&find=raw broccoli```
+
+        **Example #2: Set of Ingredients**
+        > ```https://chompthis.com/api/v2/food/ingredient/search.php?api_key=API_KEY&find=raw broccoli,mashed potatoes,chicken drumstick```
+
+        **Tips**
+          * Expose ingredient endpoints by using our **[food lookup tool](https://chompthis.com/api/lookup.php)**.
+
+        > This API endpoint is only available to Standard and Premium API subscribers. Please consider upgrading your subscription if you are subscribed to the Limited plan. **[Read this](https://desk.zoho.com/portal/chompthis/kb/articles/can-i-upgrade-downgrade-my-subscription)** if you aren't sure how to upgrade your subscription.
+      parameters:
+      - name: find
+        in: query
+        description: "Search our database for a single ingredient or a specific set\
+          \ of ingredients.\n\n**Example #1: Single Ingredient**\n> ```&find=raw broccoli```\n\
+          \n**Example #2: Set of Ingredients**\n> ```&find=raw broccoli,buttermilk\
+          \ waffle,mashed potatoes```\n\n**Important Notes** \n  * Comma-separated\
+          \ lists cannot contain more than **10 ingredients**. You must perform additional\
+          \ API calls if you are looking up more than 10 ingredients.\n"
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: |
+          #### Set maximum number of records you want the API to return, per search term. The default value is "**1**."
+
+          **Example**
+          > ```&limit=3```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+      - name: user_id
+        in: query
+        description: |
+          #### **Only required for Premium subscribers.** The unique identifier assigned to each user on your platform. This can be any string of letters or numbers and doesn't have to relate to your own database. [Learn more](https://desk.zoho.com/portal/chompthis/en/kb/articles/monthly-active-users)
+
+          **Example**
+          > ```&user_id=fehef8w4ha```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "**Valid** - Will return an object containing any matching\
+            \ ingredient foods. \n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngredientObject'
+        "400":
+          description: |
+            **Validation error** - Invalid parameters or request.
+        "401":
+          description: |
+            **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+        "404":
+          description: |
+            **Not found** - No food items were found.
+        "500":
+          description: |
+            **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+      security:
+      - ApiKeyAuth: []
+  /recipe/search.php:
+    get:
+      summary: Get recipes using a title and optional filters
+      description: "## Get recipes using a title and optional filters.\n\n**You must\
+        \ have a Recipe API key to use this endpoint.** Get a [Recipe API key](https://chompthis.com/api/recipes/).\n\
+        \n**Example** \n> ```https://chompthis.com/api/v2/recipe/search.php?api_key=API_KEY&title=TITLE```\n"
+      parameters:
+      - name: title
+        in: query
+        description: |
+          #### A recipe title
+
+          **Example**
+          > ```&title=Banana Bread```
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: excluded_cuisine
+        in: query
+        description: |
+          #### A specific cuisine you want excluded from results
+
+          **Example**
+          > ```&excluded_cuisine=Italian```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: included_cuisine
+        in: query
+        description: |
+          #### A specific cuisine you want included in results
+
+          **Example**
+          > ```&included_cuisine=Chinese```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: excluded_ingredient
+        in: query
+        description: |
+          #### Recipes with this ingredient will be excluded from results
+
+          **Example**
+          > ```&excluded_ingredient=egg```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: included_ingredient
+        in: query
+        description: |
+          #### Only recipes with this ingredient will be returned
+
+          **Example**
+          > ```&included_ingredient=apple```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: nutrients_required
+        in: query
+        description: |
+          #### Optionally require all recipes to include nutrition info. Recipes with, or without, nutrition info are returned by default.
+
+          **Example**
+          > ```&nutrients_required=1```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 0
+      - name: limit
+        in: query
+        description: |
+          #### Set maximum number of records you want the API to return. The default value is "**5**."
+
+          **Example**
+          > ```&limit=3```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+      - name: page
+        in: query
+        description: |
+          #### This is how you paginate the search result. By default, you will see the first 5 records. You must increment the page number to access the next 5 records, and so on. The default value is "**1**."
+
+          **Example**
+          > ```&page=1```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: user_id
+        in: query
+        description: |
+          #### **Only required for Premium subscribers.** The unique identifier assigned to each user on your platform. This can be any string of letters or numbers and doesn't have to relate to your own database. [Learn more](https://desk.zoho.com/portal/chompthis/en/kb/articles/monthly-active-users)
+
+          **Example**
+          > ```&user_id=fehef8w4ha```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "**Valid** - Will return an object containing any matching\
+            \ recipes. \n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeObject'
+        "400":
+          description: |
+            **Validation error** - Invalid parameters or request.
+        "401":
+          description: |
+            **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+        "404":
+          description: |
+            **Not found** - No food items were found.
+        "500":
+          description: |
+            **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+      security:
+      - ApiKeyAuth: []
+  /recipe/ingredient.php:
+    get:
+      summary: Get recipes using a list of ingredients
+      description: |
+        ## Get recipes that include all ingredients from a list.
+
+        **You must have a Recipe API key to use this endpoint.** Get a [Recipe API key](https://chompthis.com/api/recipes/).
+
+        **Example #1**
+        > ```https://chompthis.com/api/v2/recipe/ingredient.php?api_key=API_KEY&list=INGREDIENT```
+
+        **Example #2**
+        > ```https://chompthis.com/api/v2/recipe/ingredient.php?api_key=API_KEY&list=INGREDIENT,INGREDIENT,INGREDIENT```
+      parameters:
+      - name: list
+        in: query
+        description: |
+          #### A single ingredient, or a comma-separated list of up to 3 ingredients. Recipes with each of these ingredients will be returned. **You can pass in up to 3 ingredients at a time.**
+
+          **Example**
+          > ```&list=cheese,tomato,milk```
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: |
+          #### Set maximum number of records you want the API to return. The default value is "**3**."
+
+          **Example**
+          > ```&limit=3```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+      - name: page
+        in: query
+        description: |
+          #### This is how you paginate the search result. By default, you will see the first 3 records. You must increment the page number to access the next 3 records, and so on. The default value is "**1**."
+
+          **Example**
+          > ```&page=1```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: user_id
+        in: query
+        description: |
+          #### **Only required for Premium subscribers.** The unique identifier assigned to each user on your platform. This can be any string of letters or numbers and doesn't have to relate to your own database. [Learn more](https://desk.zoho.com/portal/chompthis/en/kb/articles/monthly-active-users)
+
+          **Example**
+          > ```&user_id=fehef8w4ha```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "**Valid** - Will return an object containing any matching\
+            \ recipes. \n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeObject'
+        "400":
+          description: |
+            **Validation error** - Invalid parameters or request.
+        "401":
+          description: |
+            **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+        "404":
+          description: |
+            **Not found** - No food items were found.
+        "500":
+          description: |
+            **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+      security:
+      - ApiKeyAuth: []
+  /recipe/random.php:
+    get:
+      summary: Get random popular recipes
+      description: |
+        ## Get random recipes that have instructions and nutrients
+
+        **You must have a Recipe API key to use this endpoint.** Get a [Recipe API key](https://chompthis.com/api/recipes/).
+
+        **Example**
+        > ```https://chompthis.com/api/v2/recipe/random.php?api_key=API_KEY```
+      parameters:
+      - name: limit
+        in: query
+        description: |
+          #### Set maximum number of records you want the API to return. The default value is "**5**."
+
+          **Example**
+          > ```&limit=5```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+      - name: user_id
+        in: query
+        description: |
+          #### **Only required for Premium subscribers.** The unique identifier assigned to each user on your platform. This can be any string of letters or numbers and doesn't have to relate to your own database. [Learn more](https://desk.zoho.com/portal/chompthis/en/kb/articles/monthly-active-users)
+
+          **Example**
+          > ```&user_id=fehef8w4ha```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "**Valid** - Will return an object containing any matching\
+            \ recipes. \n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeObject'
+        "400":
+          description: |
+            **Validation error** - Invalid parameters or request.
+        "401":
+          description: |
+            **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+        "404":
+          description: |
+            **Not found** - No food items were found.
+        "500":
+          description: |
+            **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+      security:
+      - ApiKeyAuth: []
+  /recipe/id.php:
+    get:
+      summary: Get a recipe by ID
+      description: |
+        ## Get a specific recipe using an ID.
+
+        **You must have a Recipe API key to use this endpoint.** Get a [Recipe API key](https://chompthis.com/api/recipes/).
+
+        **Example**
+        > ```https://chompthis.com/api/v2/recipe/id.php?api_key=API_KEY&id=RECIPE_ID```
+      parameters:
+      - name: id
+        in: query
+        description: |
+          #### A recipe ID. Recipe IDs are exposed in the /recipe/search and /recipe/ingredient endpoints.
+
+          **Example**
+          > ```&list=tdm_1143_0459d0028fcf8990724785b9e6775037```
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        description: |
+          #### **Only required for Premium subscribers.** The unique identifier assigned to each user on your platform. This can be any string of letters or numbers and doesn't have to relate to your own database. [Learn more](https://desk.zoho.com/portal/chompthis/en/kb/articles/monthly-active-users)
+
+          **Example**
+          > ```&user_id=fehef8w4ha```
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "**Valid** - Will return an object containing any matching\
+            \ recipes. \n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeObject'
+        "400":
+          description: |
+            **Validation error** - Invalid parameters or request.
+        "401":
+          description: |
+            **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+        "404":
+          description: |
+            **Not found** - No food items were found.
+        "500":
+          description: |
+            **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+      security:
+      - ApiKeyAuth: []
+components:
+  schemas:
+    BrandedFoodObject:
+      type: object
+      properties:
+        items:
+          type: array
+          description: An array containing an object for each individual item returned
+            by your API call.
+          items:
+            $ref: '#/components/schemas/BrandedFoodObject_items'
+      description: Please read the description of each field in this API response
+        object example. By default, the value of each field is **null**. This indicates
+        an unknown state or that no data exists.
+      example:
+        items:
+        - minerals:
+          - minerals
+          - minerals
+          package:
+            quantity: 0
+            size: size
+          keywords:
+          - keywords
+          - keywords
+          country_details:
+            english_speaking: 7
+            non_english_speaking: 1
+          traces:
+          - traces
+          - traces
+          description: description
+          diet_flags:
+          - ingredient: ingredient
+            is_allergen: true
+            ingredient_description: ingredient_description
+            compatibility_level: 4
+            is_compatible: is_compatible
+            diet_label: diet_label
+            compatibility_description: compatibility_description
+          - ingredient: ingredient
+            is_allergen: true
+            ingredient_description: ingredient_description
+            compatibility_level: 4
+            is_compatible: is_compatible
+            diet_label: diet_label
+            compatibility_description: compatibility_description
+          countries:
+          - countries
+          - countries
+          has_english_ingredients: true
+          palm_oil_ingredients:
+          - palm_oil_ingredients
+          - palm_oil_ingredients
+          serving:
+            size_fulltext: size_fulltext
+            size: size
+            measurement_unit: measurement_unit
+          nutrients:
+          - data_points: 5
+            name: name
+            measurement_unit: measurement_unit
+            rank: 1
+            description: description
+            per_100g: 6.027456183070403
+          - data_points: 5
+            name: name
+            measurement_unit: measurement_unit
+            rank: 1
+            description: description
+            per_100g: 6.027456183070403
+          allergens:
+          - allergens
+          - allergens
+          packaging_photos:
+            nutrition:
+              small: small
+              thumb: thumb
+              display: display
+            ingredients:
+              small: small
+              thumb: thumb
+              display: display
+            front:
+              small: small
+              thumb: thumb
+              display: display
+          ingredient_list:
+          - ingredient_list
+          - ingredient_list
+          vitamins:
+          - vitamins
+          - vitamins
+          diet_labels:
+            vegetarian:
+              confidence_description: confidence_description
+              confidence: 9
+              name: name
+              compatibility_level: 7
+              is_compatible: true
+            vegan:
+              confidence_description: confidence_description
+              confidence: 2
+              name: name
+              compatibility_level: 5
+              is_compatible: true
+            gluten_free:
+              confidence_description: confidence_description
+              confidence: 2
+              name: name
+              compatibility_level: 3
+              is_compatible: true
+          name: name
+          ingredients: ingredients
+          categories:
+          - categories
+          - categories
+          barcode: barcode
+          brand: brand
+          brand_list:
+          - brand_list
+          - brand_list
+        - minerals:
+          - minerals
+          - minerals
+          package:
+            quantity: 0
+            size: size
+          keywords:
+          - keywords
+          - keywords
+          country_details:
+            english_speaking: 7
+            non_english_speaking: 1
+          traces:
+          - traces
+          - traces
+          description: description
+          diet_flags:
+          - ingredient: ingredient
+            is_allergen: true
+            ingredient_description: ingredient_description
+            compatibility_level: 4
+            is_compatible: is_compatible
+            diet_label: diet_label
+            compatibility_description: compatibility_description
+          - ingredient: ingredient
+            is_allergen: true
+            ingredient_description: ingredient_description
+            compatibility_level: 4
+            is_compatible: is_compatible
+            diet_label: diet_label
+            compatibility_description: compatibility_description
+          countries:
+          - countries
+          - countries
+          has_english_ingredients: true
+          palm_oil_ingredients:
+          - palm_oil_ingredients
+          - palm_oil_ingredients
+          serving:
+            size_fulltext: size_fulltext
+            size: size
+            measurement_unit: measurement_unit
+          nutrients:
+          - data_points: 5
+            name: name
+            measurement_unit: measurement_unit
+            rank: 1
+            description: description
+            per_100g: 6.027456183070403
+          - data_points: 5
+            name: name
+            measurement_unit: measurement_unit
+            rank: 1
+            description: description
+            per_100g: 6.027456183070403
+          allergens:
+          - allergens
+          - allergens
+          packaging_photos:
+            nutrition:
+              small: small
+              thumb: thumb
+              display: display
+            ingredients:
+              small: small
+              thumb: thumb
+              display: display
+            front:
+              small: small
+              thumb: thumb
+              display: display
+          ingredient_list:
+          - ingredient_list
+          - ingredient_list
+          vitamins:
+          - vitamins
+          - vitamins
+          diet_labels:
+            vegetarian:
+              confidence_description: confidence_description
+              confidence: 9
+              name: name
+              compatibility_level: 7
+              is_compatible: true
+            vegan:
+              confidence_description: confidence_description
+              confidence: 2
+              name: name
+              compatibility_level: 5
+              is_compatible: true
+            gluten_free:
+              confidence_description: confidence_description
+              confidence: 2
+              name: name
+              compatibility_level: 3
+              is_compatible: true
+          name: name
+          ingredients: ingredients
+          categories:
+          - categories
+          - categories
+          barcode: barcode
+          brand: brand
+          brand_list:
+          - brand_list
+          - brand_list
+    IngredientObject:
+      type: object
+      properties:
+        items:
+          type: array
+          description: An array containing an object for each individual item returned
+            by your API call.
+          items:
+            $ref: '#/components/schemas/IngredientObject_items'
+      description: Please read the description of each field in this API response
+        object example. By default, the value of each field is **null**. This indicates
+        an unknown state or that no data exists.
+      example:
+        items:
+        - protein_conversion_factor: 2.027123023002322
+          score: score
+          calorie_conversion_factor:
+            carbohydrate_value: 3.616076749251911
+            protein_value: 7.061401241503109
+            fat_value: 9.301444243932576
+          components:
+          - data_points: 1
+            pct_weight: 4.145608029883936
+            gram_weight: 7.386281948385884
+            name: name
+            is_refuse: true
+          - data_points: 1
+            pct_weight: 4.145608029883936
+            gram_weight: 7.386281948385884
+            name: name
+            is_refuse: true
+          name: name
+          search_term: search_term
+          categories:
+          - categories
+          - categories
+          footnote: footnote
+          common_name: common_name
+          nutrients:
+          - data_points: 2
+            min: 6.027456183070403
+            median: 5.962133916683182
+            max: 1.4658129805029452
+            name: name
+            measurement_unit: measurement_unit
+            rank: 5
+            description: description
+            per_100g: 0.8008281904610115
+            footnote: footnote
+          - data_points: 2
+            min: 6.027456183070403
+            median: 5.962133916683182
+            max: 1.4658129805029452
+            name: name
+            measurement_unit: measurement_unit
+            rank: 5
+            description: description
+            per_100g: 0.8008281904610115
+            footnote: footnote
+          portions:
+          - data_points: 1
+            modifier: modifier
+            gram_weight: 1.0246457001441578
+            measurement_unit: measurement_unit
+            description: description
+            footnote: footnote
+          - data_points: 1
+            modifier: modifier
+            gram_weight: 1.0246457001441578
+            measurement_unit: measurement_unit
+            description: description
+            footnote: footnote
+        - protein_conversion_factor: 2.027123023002322
+          score: score
+          calorie_conversion_factor:
+            carbohydrate_value: 3.616076749251911
+            protein_value: 7.061401241503109
+            fat_value: 9.301444243932576
+          components:
+          - data_points: 1
+            pct_weight: 4.145608029883936
+            gram_weight: 7.386281948385884
+            name: name
+            is_refuse: true
+          - data_points: 1
+            pct_weight: 4.145608029883936
+            gram_weight: 7.386281948385884
+            name: name
+            is_refuse: true
+          name: name
+          search_term: search_term
+          categories:
+          - categories
+          - categories
+          footnote: footnote
+          common_name: common_name
+          nutrients:
+          - data_points: 2
+            min: 6.027456183070403
+            median: 5.962133916683182
+            max: 1.4658129805029452
+            name: name
+            measurement_unit: measurement_unit
+            rank: 5
+            description: description
+            per_100g: 0.8008281904610115
+            footnote: footnote
+          - data_points: 2
+            min: 6.027456183070403
+            median: 5.962133916683182
+            max: 1.4658129805029452
+            name: name
+            measurement_unit: measurement_unit
+            rank: 5
+            description: description
+            per_100g: 0.8008281904610115
+            footnote: footnote
+          portions:
+          - data_points: 1
+            modifier: modifier
+            gram_weight: 1.0246457001441578
+            measurement_unit: measurement_unit
+            description: description
+            footnote: footnote
+          - data_points: 1
+            modifier: modifier
+            gram_weight: 1.0246457001441578
+            measurement_unit: measurement_unit
+            description: description
+            footnote: footnote
+    RecipeObject:
+      type: object
+      properties:
+        items:
+          type: array
+          description: An array containing an object for each individual item returned
+            by your API call.
+          items:
+            $ref: '#/components/schemas/RecipeObject_items'
+      description: Please read the description of each field in this API response
+        object example. By default, the value of each field is **null**. This indicates
+        an unknown state or that no data exists.
+      example:
+        items:
+        - base_ingredients:
+          - base_ingredients
+          - base_ingredients
+          diabetic_exchanges:
+          - diabetic_exchanges
+          - diabetic_exchanges
+          keywords:
+          - keywords
+          - keywords
+          meta:
+            images:
+              standard: standard
+              small: small
+              thumbnail: thumbnail
+              extra_large: extra_large
+              large: large
+              extra_small: extra_small
+              grid_view: grid_view
+            created: created
+            cuisine: cuisine
+            modified: modified
+            source: source
+            url: url
+            nutrients_notice: nutrients_notice
+          author: author
+          topics:
+          - topics
+          - topics
+          ingredients:
+          - quantity: quantity
+            description: description
+          - quantity: quantity
+            description: description
+          attributes:
+            servings: servings
+            prep_time: prep_time
+            serving_size: serving_size
+            total_time: total_time
+          id: id
+          categories:
+          - categories
+          - categories
+          title: title
+          nutrients:
+            vitamins:
+            - null
+            - null
+            carbs:
+            - null
+            - null
+            daily_values:
+            - null
+            - null
+            fat:
+            - null
+            - null
+            calories:
+            - title: title
+              value: value
+              percent: percent
+            - title: title
+              value: value
+              percent: percent
+        - base_ingredients:
+          - base_ingredients
+          - base_ingredients
+          diabetic_exchanges:
+          - diabetic_exchanges
+          - diabetic_exchanges
+          keywords:
+          - keywords
+          - keywords
+          meta:
+            images:
+              standard: standard
+              small: small
+              thumbnail: thumbnail
+              extra_large: extra_large
+              large: large
+              extra_small: extra_small
+              grid_view: grid_view
+            created: created
+            cuisine: cuisine
+            modified: modified
+            source: source
+            url: url
+            nutrients_notice: nutrients_notice
+          author: author
+          topics:
+          - topics
+          - topics
+          ingredients:
+          - quantity: quantity
+            description: description
+          - quantity: quantity
+            description: description
+          attributes:
+            servings: servings
+            prep_time: prep_time
+            serving_size: serving_size
+            total_time: total_time
+          id: id
+          categories:
+          - categories
+          - categories
+          title: title
+          nutrients:
+            vitamins:
+            - null
+            - null
+            carbs:
+            - null
+            - null
+            daily_values:
+            - null
+            - null
+            fat:
+            - null
+            - null
+            calories:
+            - title: title
+              value: value
+              percent: percent
+            - title: title
+              value: value
+              percent: percent
+    BrandedFoodObject_package:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: Package quantity
+        size:
+          type: string
+          description: Package size
+      description: An object containing basic packaging information about this item
+      example:
+        quantity: 0
+        size: size
+    BrandedFoodObject_serving:
+      type: object
+      properties:
+        size:
+          type: string
+          description: Serving size
+        measurement_unit:
+          type: string
+          description: Measurement unit for each serving (e.g. if measure is 3 tsp,
+            the unit is tsp)
+        size_fulltext:
+          type: string
+          description: Serving size description
+      description: An object containing serving information for this item
+      example:
+        size_fulltext: size_fulltext
+        size: size
+        measurement_unit: measurement_unit
+    BrandedFoodObject_nutrients:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nutrient name
+        per_100g:
+          type: number
+          description: Amount of the nutrient per 100g of food
+        measurement_unit:
+          type: string
+          description: The unit used for the measure of this nutrient
+        rank:
+          type: integer
+          description: Nutrient rank
+        data_points:
+          type: integer
+          description: Number of observations on which the value is based
+        description:
+          type: string
+          description: Description of the nutrient source
+      description: An object containing information for a specific nutrient found
+        in this food item
+      example:
+        data_points: 5
+        name: name
+        measurement_unit: measurement_unit
+        rank: 1
+        description: description
+        per_100g: 6.027456183070403
+    BrandedFoodObject_diet_labels_vegan:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Diet name
+        is_compatible:
+          type: boolean
+          description: Boolean describing if this item is compatible with this diet
+        compatibility_level:
+          type: integer
+          description: Numeric representation of how compatible this item is with
+            this diet. Higher values indicate more compatibility
+        confidence:
+          type: integer
+          description: Boolean that indicates if we are confident in how this item
+            is graded for this diet
+        confidence_description:
+          type: string
+          description: Description of our confidence that this item was graded correctly
+      description: An object containing information on this item's compatibility with
+        the Vegan diets
+      example:
+        confidence_description: confidence_description
+        confidence: 2
+        name: name
+        compatibility_level: 5
+        is_compatible: true
+    BrandedFoodObject_diet_labels_vegetarian:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Diet name
+        is_compatible:
+          type: boolean
+          description: Boolean describing if this item is compatible with this diet
+        compatibility_level:
+          type: integer
+          description: Numeric representation of how compatible this item is with
+            this diet. Higher values indicate more compatibility
+        confidence:
+          type: integer
+          description: Boolean that indicates if we are confident in how this item
+            is graded for this diet
+        confidence_description:
+          type: string
+          description: Description of our confidence that this item was graded correctly
+      description: An object containing information on this item's compatibility with
+        Vegetarian diets
+      example:
+        confidence_description: confidence_description
+        confidence: 9
+        name: name
+        compatibility_level: 7
+        is_compatible: true
+    BrandedFoodObject_diet_labels_gluten_free:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Diet name
+        is_compatible:
+          type: boolean
+          description: Boolean describing if this item is compatible with this diet
+        compatibility_level:
+          type: integer
+          description: Numeric representation of how compatible this item is with
+            this diet. Higher values indicate more compatibility
+        confidence:
+          type: integer
+          description: Boolean that indicates if we are confident in how this item
+            is graded for this diet
+        confidence_description:
+          type: string
+          description: Description of our confidence that this item was graded correctly
+      description: An object containing information on this item's compatibility with
+        Gluten Free diets
+      example:
+        confidence_description: confidence_description
+        confidence: 2
+        name: name
+        compatibility_level: 3
+        is_compatible: true
+    BrandedFoodObject_diet_labels:
+      type: object
+      properties:
+        vegan:
+          $ref: '#/components/schemas/BrandedFoodObject_diet_labels_vegan'
+        vegetarian:
+          $ref: '#/components/schemas/BrandedFoodObject_diet_labels_vegetarian'
+        gluten_free:
+          $ref: '#/components/schemas/BrandedFoodObject_diet_labels_gluten_free'
+      description: An object containing this item's compatibility grades for each
+        supported diet
+      example:
+        vegetarian:
+          confidence_description: confidence_description
+          confidence: 9
+          name: name
+          compatibility_level: 7
+          is_compatible: true
+        vegan:
+          confidence_description: confidence_description
+          confidence: 2
+          name: name
+          compatibility_level: 5
+          is_compatible: true
+        gluten_free:
+          confidence_description: confidence_description
+          confidence: 2
+          name: name
+          compatibility_level: 3
+          is_compatible: true
+    BrandedFoodObject_diet_flags:
+      type: object
+      properties:
+        ingredient:
+          type: string
+          description: Ingredient name
+        ingredient_description:
+          type: string
+          description: Description of the ingredient
+        diet_label:
+          type: string
+          description: Name of the diet with which this ingredient may not be compatible
+        is_compatible:
+          type: string
+          description: A description of if we believe this ingredient is compatible
+            with the diet
+        compatibility_level:
+          type: integer
+          description: A numeric representation of if we believe this ingredient is
+            compatible with the diet. Higher values indicate more compatibility
+        compatibility_description:
+          type: string
+          description: A description of how we graded this ingredient for compatibility
+            with the diet
+        is_allergen:
+          type: boolean
+          description: Boolean representing if the ingredient is a known allergen
+      description: An object containing information on an individual ingredient that
+        was flagged as potentially not being compatible with a certain diet
+      example:
+        ingredient: ingredient
+        is_allergen: true
+        ingredient_description: ingredient_description
+        compatibility_level: 4
+        is_compatible: is_compatible
+        diet_label: diet_label
+        compatibility_description: compatibility_description
+    BrandedFoodObject_packaging_photos_front:
+      type: object
+      properties:
+        small:
+          type: string
+          description: Small photo of the front of this item's packaging
+        thumb:
+          type: string
+          description: Thumbnail photo of the front of this item's packaging
+        display:
+          type: string
+          description: Full-sized photo of the front of this item's packaging
+      description: An object containing photos of the front of this item's packaging
+      example:
+        small: small
+        thumb: thumb
+        display: display
+    BrandedFoodObject_packaging_photos_nutrition:
+      type: object
+      properties:
+        small:
+          type: string
+          description: Small photo of this item's nutrition label
+        thumb:
+          type: string
+          description: Thumbnail photo of this item's nutrition label
+        display:
+          type: string
+          description: Full-sized photo of this item's nutrition label
+      description: An object containing photos of this item's nutrition label
+      example:
+        small: small
+        thumb: thumb
+        display: display
+    BrandedFoodObject_packaging_photos_ingredients:
+      type: object
+      properties:
+        small:
+          type: string
+          description: Small photo of the ingredients on this item's packaging
+        thumb:
+          type: string
+          description: Thumbnail photo of the ingredients on this item's packaging
+        display:
+          type: string
+          description: Full-sized photo of the ingredients on this item's packaging
+      description: An object containing photos of the ingredients on this item's packaging
+      example:
+        small: small
+        thumb: thumb
+        display: display
+    BrandedFoodObject_packaging_photos:
+      type: object
+      properties:
+        front:
+          $ref: '#/components/schemas/BrandedFoodObject_packaging_photos_front'
+        nutrition:
+          $ref: '#/components/schemas/BrandedFoodObject_packaging_photos_nutrition'
+        ingredients:
+          $ref: '#/components/schemas/BrandedFoodObject_packaging_photos_ingredients'
+      description: A object containing a collection of photos of this item's packaging
+      example:
+        nutrition:
+          small: small
+          thumb: thumb
+          display: display
+        ingredients:
+          small: small
+          thumb: thumb
+          display: display
+        front:
+          small: small
+          thumb: thumb
+          display: display
+    BrandedFoodObject_country_details:
+      type: object
+      properties:
+        english_speaking:
+          type: integer
+          description: The number of countries where English is the country's primary
+            language
+        non_english_speaking:
+          type: integer
+          description: The number of countries where English is not the country's
+            primary language
+      description: An object containing additional information on the countries where
+        this item is found
+      example:
+        english_speaking: 7
+        non_english_speaking: 1
+    BrandedFoodObject_items:
+      type: object
+      properties:
+        barcode:
+          type: string
+          description: EAN/UPC barcode
+        name:
+          type: string
+          description: Item name as provided by brand owner or as shown on packaging
+        brand:
+          type: string
+          description: The brand name that owns this item
+        ingredients:
+          type: string
+          description: This food item's ingredients from greatest quantity to least
+        package:
+          $ref: '#/components/schemas/BrandedFoodObject_package'
+        serving:
+          $ref: '#/components/schemas/BrandedFoodObject_serving'
+        categories:
+          type: array
+          items:
+            type: string
+            description: An array of categories for this item
+        nutrients:
+          type: array
+          description: An array containing nutrient informatio objects for this food
+            item
+          items:
+            $ref: '#/components/schemas/BrandedFoodObject_nutrients'
+        diet_labels:
+          $ref: '#/components/schemas/BrandedFoodObject_diet_labels'
+        diet_flags:
+          type: array
+          description: An array of ingredient objects that were flagged while grading
+            this item for compatibility with each diet
+          items:
+            $ref: '#/components/schemas/BrandedFoodObject_diet_flags'
+        packaging_photos:
+          $ref: '#/components/schemas/BrandedFoodObject_packaging_photos'
+        allergens:
+          type: array
+          description: An array of ingredients in this item that may cause allergic
+            reactions in people
+          items:
+            type: string
+        brand_list:
+          type: array
+          description: An array of brands we have associated with this item. Some
+            items are sold by more than 1 brand.
+          items:
+            type: string
+        countries:
+          type: array
+          description: An array of countries where this item is sold
+          items:
+            type: string
+        country_details:
+          $ref: '#/components/schemas/BrandedFoodObject_country_details'
+        palm_oil_ingredients:
+          type: array
+          description: An array of ingredients made from palm oil
+          items:
+            type: string
+        ingredient_list:
+          type: array
+          description: An array of this item's ingredients
+          items:
+            type: string
+        has_english_ingredients:
+          type: boolean
+          description: A boolean indicating if we have English ingredients for this
+            item
+        minerals:
+          type: array
+          description: An array of minerals that this item contains
+          items:
+            type: string
+        traces:
+          type: array
+          description: An array of trace ingredients that may be found in this item
+          items:
+            type: string
+        vitamins:
+          type: array
+          description: An array of vitamins that are found in this item
+          items:
+            type: string
+        description:
+          type: string
+          description: A description of this item
+        keywords:
+          type: array
+          description: An array of keywords that can be used to describe this item
+          items:
+            type: string
+      description: An object containing information for this specific item.
+      example:
+        minerals:
+        - minerals
+        - minerals
+        package:
+          quantity: 0
+          size: size
+        keywords:
+        - keywords
+        - keywords
+        country_details:
+          english_speaking: 7
+          non_english_speaking: 1
+        traces:
+        - traces
+        - traces
+        description: description
+        diet_flags:
+        - ingredient: ingredient
+          is_allergen: true
+          ingredient_description: ingredient_description
+          compatibility_level: 4
+          is_compatible: is_compatible
+          diet_label: diet_label
+          compatibility_description: compatibility_description
+        - ingredient: ingredient
+          is_allergen: true
+          ingredient_description: ingredient_description
+          compatibility_level: 4
+          is_compatible: is_compatible
+          diet_label: diet_label
+          compatibility_description: compatibility_description
+        countries:
+        - countries
+        - countries
+        has_english_ingredients: true
+        palm_oil_ingredients:
+        - palm_oil_ingredients
+        - palm_oil_ingredients
+        serving:
+          size_fulltext: size_fulltext
+          size: size
+          measurement_unit: measurement_unit
+        nutrients:
+        - data_points: 5
+          name: name
+          measurement_unit: measurement_unit
+          rank: 1
+          description: description
+          per_100g: 6.027456183070403
+        - data_points: 5
+          name: name
+          measurement_unit: measurement_unit
+          rank: 1
+          description: description
+          per_100g: 6.027456183070403
+        allergens:
+        - allergens
+        - allergens
+        packaging_photos:
+          nutrition:
+            small: small
+            thumb: thumb
+            display: display
+          ingredients:
+            small: small
+            thumb: thumb
+            display: display
+          front:
+            small: small
+            thumb: thumb
+            display: display
+        ingredient_list:
+        - ingredient_list
+        - ingredient_list
+        vitamins:
+        - vitamins
+        - vitamins
+        diet_labels:
+          vegetarian:
+            confidence_description: confidence_description
+            confidence: 9
+            name: name
+            compatibility_level: 7
+            is_compatible: true
+          vegan:
+            confidence_description: confidence_description
+            confidence: 2
+            name: name
+            compatibility_level: 5
+            is_compatible: true
+          gluten_free:
+            confidence_description: confidence_description
+            confidence: 2
+            name: name
+            compatibility_level: 3
+            is_compatible: true
+        name: name
+        ingredients: ingredients
+        categories:
+        - categories
+        - categories
+        barcode: barcode
+        brand: brand
+        brand_list:
+        - brand_list
+        - brand_list
+    IngredientObject_nutrients:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nutrient name
+        per_100g:
+          type: number
+          description: Amount of the nutrient per 100g of food
+        measurement_unit:
+          type: string
+          description: The unit used for the measure of this nutrient
+        min:
+          type: number
+          description: Minimum nutrient value
+        max:
+          type: number
+          description: Maximum nutrient value
+        median:
+          type: number
+          description: Median nutrient value
+        rank:
+          type: integer
+          description: Nutrient rank
+        data_points:
+          type: integer
+          description: Number of observations on which the value is based
+        footnote:
+          type: string
+          description: Comments on any unusual aspect of the food nutrient. Examples
+            might include why a nutrient value is different than typically expected.
+        description:
+          type: string
+          description: Description of the nutrient source
+      description: An object containing information for a specific nutrient found
+        in this food item
+      example:
+        data_points: 2
+        min: 6.027456183070403
+        median: 5.962133916683182
+        max: 1.4658129805029452
+        name: name
+        measurement_unit: measurement_unit
+        rank: 5
+        description: description
+        per_100g: 0.8008281904610115
+        footnote: footnote
+    IngredientObject_calorie_conversion_factor:
+      type: object
+      properties:
+        protein_value:
+          type: number
+          description: The multiplication factor for protein
+        fat_value:
+          type: number
+          description: The multiplication factor for fat
+        carbohydrate_value:
+          type: number
+          description: The multiplication factor for carbohydrates
+      description: An object containing the multiplication factors to be used when
+        calculating energy from macronutrients for a specific food.
+      example:
+        carbohydrate_value: 3.616076749251911
+        protein_value: 7.061401241503109
+        fat_value: 9.301444243932576
+    IngredientObject_components:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The kind of component, e.g. bone
+        pct_weight:
+          type: number
+          description: The weight of the component as a percentage of the total weight
+            of the food
+        gram_weight:
+          type: number
+          description: The weight of the component in grams
+        is_refuse:
+          type: boolean
+          description: Whether the component is refuse, i.e. not edible
+        data_points:
+          type: integer
+          description: The number of obersvations on which the measure is based
+      description: An object containing information on a specific component of this
+        food item
+      example:
+        data_points: 1
+        pct_weight: 4.145608029883936
+        gram_weight: 7.386281948385884
+        name: name
+        is_refuse: true
+    IngredientObject_portions:
+      type: object
+      properties:
+        measurement_unit:
+          type: string
+          description: The unit used for measure (e.g. if mesure is 3 tsp, the unit
+            is tsp)
+        description:
+          type: string
+          description: Comments that provide more specificity on the measure. For
+            example, for a pizza measure the dissemination text might be 1 slice is
+            1/8th of a 14 inch pizza.
+        modifier:
+          type: string
+          description: Qualifier of the measure (e.g. related to food shape or form)
+            (e.g. melted, crushed, diced)
+        gram_weight:
+          type: number
+          description: The weight of the measure in grams
+        data_points:
+          type: integer
+          description: The number of observations on which the measure is based
+        footnote:
+          type: string
+          description: Comments on any unusual aspects of the measure. Examples might
+            includes caveats on the usage of a measure, or reasons why a measure gram
+            weight is an unexpected value.
+      description: An object containing information on a specific food portion found
+        in this item
+      example:
+        data_points: 1
+        modifier: modifier
+        gram_weight: 1.0246457001441578
+        measurement_unit: measurement_unit
+        description: description
+        footnote: footnote
+    IngredientObject_items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Item name as provided by brand owner or as shown on packaging
+        categories:
+          type: array
+          items:
+            type: string
+            description: An array of categories for this item
+        nutrients:
+          type: array
+          description: An array containing nutrient informatio objects for this food
+            item
+          items:
+            $ref: '#/components/schemas/IngredientObject_nutrients'
+        calorie_conversion_factor:
+          $ref: '#/components/schemas/IngredientObject_calorie_conversion_factor'
+        protein_conversion_factor:
+          type: number
+          description: The multiplication factor used to calculate protein from nitrogen
+        components:
+          type: array
+          description: An array of objects containing the constituent parts of a food
+            (e.g. bone is a component of meat)
+          items:
+            $ref: '#/components/schemas/IngredientObject_components'
+        portions:
+          type: array
+          description: An array of objects containing information on discrete amounts
+            of a food found in this item
+          items:
+            $ref: '#/components/schemas/IngredientObject_portions'
+        common_name:
+          type: string
+          description: Common name associated with this item. These generally clarify
+            what the item is (e.g. when the brand name is "BRAND's Spicy Enchilada"
+            the common name may be "Chicken enchilada")
+        footnote:
+          type: string
+          description: Comments on any unusual aspects of this item. Examples might
+            include unusual aspects of the food overall
+        search_term:
+          type: string
+          description: The original search term that found this food item
+        score:
+          type: string
+          description: A value that represents how similar the name of this food item
+            is to the original search term. The lower the value the closer this item's
+            name is to the original search term.
+      description: An object containing information for this specific item.
+      example:
+        protein_conversion_factor: 2.027123023002322
+        score: score
+        calorie_conversion_factor:
+          carbohydrate_value: 3.616076749251911
+          protein_value: 7.061401241503109
+          fat_value: 9.301444243932576
+        components:
+        - data_points: 1
+          pct_weight: 4.145608029883936
+          gram_weight: 7.386281948385884
+          name: name
+          is_refuse: true
+        - data_points: 1
+          pct_weight: 4.145608029883936
+          gram_weight: 7.386281948385884
+          name: name
+          is_refuse: true
+        name: name
+        search_term: search_term
+        categories:
+        - categories
+        - categories
+        footnote: footnote
+        common_name: common_name
+        nutrients:
+        - data_points: 2
+          min: 6.027456183070403
+          median: 5.962133916683182
+          max: 1.4658129805029452
+          name: name
+          measurement_unit: measurement_unit
+          rank: 5
+          description: description
+          per_100g: 0.8008281904610115
+          footnote: footnote
+        - data_points: 2
+          min: 6.027456183070403
+          median: 5.962133916683182
+          max: 1.4658129805029452
+          name: name
+          measurement_unit: measurement_unit
+          rank: 5
+          description: description
+          per_100g: 0.8008281904610115
+          footnote: footnote
+        portions:
+        - data_points: 1
+          modifier: modifier
+          gram_weight: 1.0246457001441578
+          measurement_unit: measurement_unit
+          description: description
+          footnote: footnote
+        - data_points: 1
+          modifier: modifier
+          gram_weight: 1.0246457001441578
+          measurement_unit: measurement_unit
+          description: description
+          footnote: footnote
+    RecipeObject_meta_images:
+      type: object
+      properties:
+        extra_large:
+          type: string
+          description: Extra large recipe image
+        large:
+          type: string
+          description: Large recipe image
+        standard:
+          type: string
+          description: Standard recipe image
+        grid_view:
+          type: string
+          description: Grid view recipe image
+        small:
+          type: string
+          description: Small recipe image
+        thumbnail:
+          type: string
+          description: Thumbnail recipe image
+        extra_small:
+          type: string
+          description: Extra small recipe image
+      description: An object containing this recipe's image URLs
+      example:
+        standard: standard
+        small: small
+        thumbnail: thumbnail
+        extra_large: extra_large
+        large: large
+        extra_small: extra_small
+        grid_view: grid_view
+    RecipeObject_meta:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL to the recipe. You must link back to the recipe when displaying
+            it.
+        images:
+          $ref: '#/components/schemas/RecipeObject_meta_images'
+        source:
+          type: string
+          description: The source of the recipe. You must attribute this source when
+            displaying this recipe.
+        cuisine:
+          type: string
+          description: This recipe's cuisine
+        created:
+          type: string
+          description: The date when this recipe was created
+        modified:
+          type: string
+          description: The date when this recipe was most recently modified
+        nutrients_notice:
+          type: string
+          description: Additional information about this recipe's nutrients
+      description: An object containing this item's compatibility grades for each
+        supported diet
+      example:
+        images:
+          standard: standard
+          small: small
+          thumbnail: thumbnail
+          extra_large: extra_large
+          large: large
+          extra_small: extra_small
+          grid_view: grid_view
+        created: created
+        cuisine: cuisine
+        modified: modified
+        source: source
+        url: url
+        nutrients_notice: nutrients_notice
+    RecipeObject_attributes:
+      type: object
+      properties:
+        prep_time:
+          type: string
+          description: The time it takes to prep this recipe
+        total_time:
+          type: string
+          description: The total time it takes to make this recipe
+        servings:
+          type: string
+          description: The number of servings this recipe makes
+        serving_size:
+          type: string
+          description: The size of each serving
+      description: An object containing recipe attributes
+      example:
+        servings: servings
+        prep_time: prep_time
+        serving_size: serving_size
+        total_time: total_time
+    RecipeObject_ingredients:
+      type: object
+      properties:
+        quantity:
+          type: string
+          description: The quantity of this ingredient
+        description:
+          type: string
+          description: A description of this ingredient
+      description: An object containing information about a specific recipe ingredient
+      example:
+        quantity: quantity
+        description: description
+    RecipeObject_nutrients_calories:
+      properties:
+        title:
+          type: string
+          description: Nutrient name
+        value:
+          type: string
+          description: The amount of this nutrient in this recipe
+        percent:
+          type: string
+          description: The daily recommended percent total for this nutrient
+      example:
+        title: title
+        value: value
+        percent: percent
+    RecipeObject_nutrients:
+      type: object
+      properties:
+        calories:
+          type: array
+          description: An array containing information for calories found in this
+            recipe
+          items:
+            $ref: '#/components/schemas/RecipeObject_nutrients_calories'
+        daily_values:
+          type: array
+          description: An array containing information for this recipe's daily recommended
+            value of certain nutrients
+          items:
+            $ref: '#/components/schemas/RecipeObject_nutrients_calories'
+        fat:
+          type: array
+          description: An array containing information for fat found in this recipe
+          items:
+            $ref: '#/components/schemas/RecipeObject_nutrients_calories'
+        carbs:
+          type: array
+          description: An array containing information for carbs found in this recipe
+          items:
+            $ref: '#/components/schemas/RecipeObject_nutrients_calories'
+        vitamins:
+          type: array
+          description: An array containing information for vitamins found in this
+            recipe
+          items:
+            $ref: '#/components/schemas/RecipeObject_nutrients_calories'
+      description: An object containing nutrient information for this recipe
+      example:
+        vitamins:
+        - null
+        - null
+        carbs:
+        - null
+        - null
+        daily_values:
+        - null
+        - null
+        fat:
+        - null
+        - null
+        calories:
+        - title: title
+          value: value
+          percent: percent
+        - title: title
+          value: value
+          percent: percent
+    RecipeObject_items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique recipe ID
+        title:
+          type: string
+          description: Recipe title
+        meta:
+          $ref: '#/components/schemas/RecipeObject_meta'
+        categories:
+          type: array
+          items:
+            type: string
+            description: An array of categories for this recipe
+        author:
+          type: string
+          description: The author of this recipe. You must attribute this author when
+            displaying this recipe.
+        keywords:
+          type: array
+          items:
+            type: string
+            description: An array of keywords for this recipe
+        topics:
+          type: array
+          items:
+            type: string
+            description: An array of topics for this recipe
+        attributes:
+          $ref: '#/components/schemas/RecipeObject_attributes'
+        ingredients:
+          type: array
+          description: An array containing this recipe's ingredients
+          items:
+            $ref: '#/components/schemas/RecipeObject_ingredients'
+        base_ingredients:
+          type: array
+          items:
+            type: string
+            description: The base ingredient for each ingredient in this recipe
+        nutrients:
+          $ref: '#/components/schemas/RecipeObject_nutrients'
+        diabetic_exchanges:
+          type: array
+          items:
+            type: string
+            description: An array of alternate ingredients that can be used to make
+              this recipe diabetic-friendly.
+      description: An object containing information for this specific item.
+      example:
+        base_ingredients:
+        - base_ingredients
+        - base_ingredients
+        diabetic_exchanges:
+        - diabetic_exchanges
+        - diabetic_exchanges
+        keywords:
+        - keywords
+        - keywords
+        meta:
+          images:
+            standard: standard
+            small: small
+            thumbnail: thumbnail
+            extra_large: extra_large
+            large: large
+            extra_small: extra_small
+            grid_view: grid_view
+          created: created
+          cuisine: cuisine
+          modified: modified
+          source: source
+          url: url
+          nutrients_notice: nutrients_notice
+        author: author
+        topics:
+        - topics
+        - topics
+        ingredients:
+        - quantity: quantity
+          description: description
+        - quantity: quantity
+          description: description
+        attributes:
+          servings: servings
+          prep_time: prep_time
+          serving_size: serving_size
+          total_time: total_time
+        id: id
+        categories:
+        - categories
+        - categories
+        title: title
+        nutrients:
+          vitamins:
+          - null
+          - null
+          carbs:
+          - null
+          - null
+          daily_values:
+          - null
+          - null
+          fat:
+          - null
+          - null
+          calories:
+          - title: title
+            value: value
+            percent: percent
+          - title: title
+            value: value
+            percent: percent
+  responses:
+    "200BrandedResponse":
+      description: "**Valid** - Will return an object containing any matching foods.\
+        \ \n"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BrandedFoodObject'
+    "200IngredientResponse":
+      description: "**Valid** - Will return an object containing any matching ingredient\
+        \ foods. \n"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/IngredientObject'
+    "200RecipeResponse":
+      description: "**Valid** - Will return an object containing any matching recipes.\
+        \ \n"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RecipeObject'
+    "400Error":
+      description: |
+        **Validation error** - Invalid parameters or request.
+    "401Error":
+      description: |
+        **Unauthorized** - Invalid API key, unauthorized access, or usage limits exceeded. ***[More information &raquo;](https://desk.zoho.com/portal/chompthis/kb/articles/what-is-a-rate-limit)***
+    "404Error":
+      description: |
+        **Not found** - No food items were found.
+    "500Error":
+      description: |
+        **Server error** - Internal server error, request failed, or base error. *Please **[contact us](https://chompthis.com/api/ticket-new.php)** if you see this.*
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: api_key
+      in: query
